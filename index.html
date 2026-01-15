@@ -186,35 +186,45 @@
         }
     </script>
     <script>
-   function sendData() {
+    function sendData() {
     const formID = "1W4mTLGqTK4LR08ZxBGbE9D3mPXDX1ZYpcbZz3IjD_OU"; 
     const url = `https://docs.google.com/forms/d/e/${formID}/formResponse`;
     
-    // Lấy tên từ ô input
+    // 1. Lấy tên từ ô input (Đã khớp với id="userName")
     const name = document.getElementById('userName').value;
     
-    // Lấy giờ giấc từ radio button hoặc ô tự nhập
+    // 2. Lấy giờ giấc từ radio button hoặc ô tự nhập
     let timeChoice = document.querySelector('input[name="time"]:checked')?.value || "";
     const customTime = document.getElementById('customTime').value;
-    const finalTime = customTime ? `${timeChoice} (Tự nhập: ${customTime})` : timeChoice;
+    const finalTime = customTime ? `${timeChoice} | Tự nhập: ${customTime}` : timeChoice;
+
+    // Kiểm tra nếu tên trống thì nhắc bé nhập
+    if (!name) {
+        alert("Bé ơi, nhập tên cho tớ biết với nhee!");
+        return;
+    }
 
     const formData = new FormData();
     formData.append("entry.2062978233", name); 
     formData.append("entry.191085165", finalTime);
 
+    // 3. Gửi dữ liệu
     fetch(url, { 
         method: "POST", 
         mode: "no-cors", 
         body: formData 
     }).then(() => {
-        // Sau khi gửi xong thì chuyển sang trang cảm ơn
-        finishApp();
+        console.log("Dữ liệu đã gửi về Google Form!");
+        finishApp(); // Chuyển sang trang cảm ơn
+    }).catch(() => {
+        finishApp(); // Vẫn chuyển trang kể cả có lỗi mạng
     });
-}
+} 
 </script>
 </body>
 
 </html>
+
 
 
 
