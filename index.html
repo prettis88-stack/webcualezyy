@@ -131,9 +131,9 @@
 
     <div id="page5" class="container hidden">
         <h1>Bé hãy điền tên của mình để LeeZyy biết bé là ai nhee</h1>
-        <input type="text" id="nameInput" placeholder="Nhập tên bé...">
+        <input type="text" id="userName" placeholder="Nhập tên bé...">
         <br>
-        <button onclick= "warning ('Khoan! Bé nhớ lên đồ xinh vào nhá', true)">Xong</button>
+        <button onclick= "showWarning('Khoan! Bé nhớ lên đồ xinh vào nhá', true)">Xong</button>
     </div>
 
     <div id="pageEnd" class="container hidden">
@@ -186,34 +186,36 @@
         }
     </script>
     <script>
-function sendData() {
-    // 1. Thay ID của Form bạn (Lấy từ link trên trình duyệt)
+   function sendData() {
     const formID = "1W4mTLGqTK4LR08ZxBGbE9D3mPXDX1ZYpcbZz3IjD_OU"; 
     const url = `https://docs.google.com/forms/d/e/${formID}/formResponse`;
     
-    // Lấy tên bé từ ô nhập liệu trên web
+    // Lấy tên từ ô input
     const name = document.getElementById('userName').value;
-    // Lấy các kết quả mà bé đã chọn (giả sử biến 'result' lưu mảng kết quả)
-    const choices = result.join(" | ");
+    
+    // Lấy giờ giấc từ radio button hoặc ô tự nhập
+    let timeChoice = document.querySelector('input[name="time"]:checked')?.value || "";
+    const customTime = document.getElementById('customTime').value;
+    const finalTime = customTime ? `${timeChoice} (Tự nhập: ${customTime})` : timeChoice;
 
     const formData = new FormData();
-    // 2. Thay đúng 2 mã số entry bạn đã lấy từ "Pre-fill form"
     formData.append("entry.2062978233", name); 
-    formData.append("entry.191085165", choices);
+    formData.append("entry.191085165", finalTime);
 
-    // Gửi dữ liệu đi ngầm
     fetch(url, { 
         method: "POST", 
         mode: "no-cors", 
         body: formData 
     }).then(() => {
-        console.log("Đã gửi thành công!");
+        // Sau khi gửi xong thì chuyển sang trang cảm ơn
+        finishApp();
     });
 }
 </script>
 </body>
 
 </html>
+
 
 
 
