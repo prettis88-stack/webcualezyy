@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webcualeezyy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Patrick Hand', cursive;
+            background-color: #fff0f3;
+            height: 100vh; display: flex;
+            justify-content: center; align-items: center;
+            overflow: hidden;
+        }
+
+        /* Hiệu ứng cho tất cả sticker */
+        .ponyo-sticker {
+            position: absolute;
+            width: 100px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: bounce 3s infinite ease-in-out;
+            z-index: 5;
+        }
+
+        /* Hiệu ứng khi rê chuột (Cute xỉu) */
+        .ponyo-sticker:hover {
+            transform: scale(1.3) rotate(15deg) !important;
+            filter: drop-shadow(0 0 15px #ffb7b2);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px; border-radius: 40px;
+            box-shadow: 0 15px 30px rgba(255, 182, 193, 0.4);
+            text-align: center; z-index: 10;
+            max-width: 450px; border: 3px dashed #ffb7b2;
+        }
+
+        h1 { color: #ff6b6b; font-size: 2.2rem; }
+        p { color: #888; font-size: 1.3rem; }
+
+        /* Mũi tên chỉ dẫn */
+        .arrow-hint {
+            position: absolute;
+            background: white;
+            color: #ff6b6b;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            font-weight: bold;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .btn-group { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+        button {
+            padding: 12px; border: none; border-radius: 25px;
+            background: #ffb7b2; color: white;
+            font-family: inherit; font-size: 1.2rem;
+            cursor: pointer; transition: 0.3s;
+        }
+        button:hover { background: #ff8b84; transform: scale(1.05); }
+
+        .hidden { display: none; }
+        input[type="text"] {
+            padding: 12px; width: 80%; border: 2px solid #ffb7b2;
+            border-radius: 15px; outline: none; margin: 10px 0;
+            font-family: inherit; text-align: center;
+        }
+
+        /* Biển cảnh báo */
+        #alert-box {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: white; border: 5px solid #ffb7b2;
+            padding: 40px; border-radius: 30px; z-index: 100;
+            box-shadow: 0 0 100px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .close-x { position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 1.5rem; color: #ffb7b2; }
+    </style>
+</head>
+<body>
+
+    <img src="ponyo1.png" class="ponyo-sticker" style="top:15%; left:10%;" onclick="nextPage(2)">
+    <img src="ponyo2.png" class="ponyo-sticker" style="bottom:20%; left:15%;" onclick="nextPage(2)">
+    
+    <img id="target-ponyo" src="ponyo3.png" class="ponyo-sticker" style="top:25%; right:15%;" onclick="nextPage(2)">
+    <div id="arrow" class="arrow-hint">Bé nhấn dô sticker đây nèee!! ➔</div>
+
+    <div id="page1" class="container">
+        <h1>Chào mừng "bé iu" đã đến với trang của tớ</h1>
+        <p>Bé hãy lựa thời gian phù hợp để tới chụp hình với tớ nha 👩‍🎓</p>
+    </div>
+
+    <div id="page2" class="container hidden">
+        <h1>Ngày 24 tháng 1 sắp tới đây bé có rảnh hogg??</h1>
+        <div class="btn-group">
+            <button onclick="nextPage(3)">Có nhaa</button>
+            <button onclick="nextPage('end')">Không ùii</button>
+        </div>
+    </div>
+
+    <div id="page3" class="container hidden">
+        <h1>Vậy bé đến dự kỉ yếu với tớ nha!!</h1>
+        <div class="btn-group">
+            <button onclick="nextPage(4)">Oke nè</button>
+            <button onclick="showWarning('Bé phải chọn Có cho tuii', false)">Hông nha</button>
+        </div>
+    </div>
+
+    <div id="page4" class="container hidden">
+        <h1>Bé chọn khung giờ mình tới được nhé</h1>
+        <div class="btn-group">
+            <label><input type="radio" name="time" value="16h-16h30"> 16h - 16h30</label>
+            <label><input type="radio" name="time" value="16h30-16h45"> 16h30-16h45</label>
+            <label><input type="radio" name="time" value="16h45-17h15"> 16h45-17h15</label>
+            <input type="text" id="customTime" placeholder="Bé tự nhập giờ nếu muốn">
+            <button onclick="nextPage(5)">Hoàn tất</button>
+        </div>
+    </div>
+
+    <div id="page5" class="container hidden">
+        <h1>Bé hãy điền tên của mình để LeeZyy biết bé là ai nhee</h1>
+        <input type="text" id="nameInput" placeholder="Nhập tên bé...">
+        <br>
+        <button onclick="showWarning('Khoan! Bé nhớ lên đồ xinh vào nhá', true)">Xong</button>
+    </div>
+
+    <div id="pageEnd" class="container hidden">
+        <h1>Cảm ơn bé đã giành thời gian trả lời với tớ nha 💖</h1>
+    </div>
+
+    <div id="alert-box" class="hidden">
+        <span class="close-x" onclick="closeAlert()">X</span>
+        <h2 id="alert-msg"></h2>
+        <button id="alert-btn" class="hidden" onclick="finishApp()">Oke, nhớ ùii</button>
+    </div>
+
+    <script>
+        // Định vị mũi tên theo sticker mục tiêu
+        function locateArrow() {
+            const ponyo = document.getElementById('target-ponyo').getBoundingClientRect();
+            const arrow = document.getElementById('arrow');
+            arrow.style.top = (ponyo.top + 30) + 'px';
+            arrow.style.left = (ponyo.left - 130) + 'px';
+        }
+        window.onload = locateArrow;
+
+        function nextPage(p) {
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            document.getElementById('arrow').classList.add('hidden');
+            if(p === 'end') {
+                document.getElementById('pageEnd').classList.remove('hidden');
+            } else {
+                document.getElementById('page' + p).classList.remove('hidden');
+            }
+        }
+
+        function showWarning(msg, isFinal) {
+            document.getElementById('alert-box').classList.remove('hidden');
+            document.getElementById('alert-msg').innerText = msg;
+            if(isFinal) {
+                document.getElementById('alert-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('alert-btn').classList.add('hidden');
+            }
+        }
+
+        function closeAlert() {
+            document.getElementById('alert-box').classList.add('hidden');
+        }
+
+        function finishApp() {
+            closeAlert();
+            nextPage('end');
+        }
+    </script>
+</body>
+</html>
