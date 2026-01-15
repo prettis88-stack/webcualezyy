@@ -185,6 +185,33 @@
             nextPage('end');
         }
     </script>
+    <script>
+function sendData() {
+    // 1. Thay ID của Form bạn (Lấy từ link trên trình duyệt)
+    const formID = "1W4mTLGqTK4LR08ZxBGbE9D3mPXDX1ZYpcbZz3IjD_OU"; 
+    const url = `https://docs.google.com/forms/d/e/${formID}/formResponse`;
+    
+    // Lấy tên bé từ ô nhập liệu trên web
+    const name = document.getElementById('userName').value;
+    // Lấy các kết quả mà bé đã chọn (giả sử biến 'result' lưu mảng kết quả)
+    const choices = result.join(" | ");
+
+    const formData = new FormData();
+    // 2. Thay đúng 2 mã số entry bạn đã lấy từ "Pre-fill form"
+    formData.append("entry.2062978233", name); 
+    formData.append("entry.191085165", choices);
+
+    // Gửi dữ liệu đi ngầm
+    fetch(url, { 
+        method: "POST", 
+        mode: "no-cors", 
+        body: formData 
+    }).then(() => {
+        console.log("Đã gửi thành công!");
+    });
+}
+</script>
 </body>
 
 </html>
+
