@@ -6,102 +6,116 @@
     <title>webcualeezyy</title>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
-        body {
+        :root { --pink: #ffb7b2; --dark-pink: #ff6b6b; --bg: #fff0f3; }
+        
+        body { 
             margin: 0; padding: 0;
-            font-family: 'Patrick Hand', cursive;
-            background-color: #fff0f3;
-            height: 100vh; display: flex;
-            justify-content: center; align-items: center;
-            overflow: hidden;
+            font-family: 'Patrick Hand', cursive; 
+            background-color: var(--bg); 
+            height: 100vh; display: flex; 
+            justify-content: center; align-items: center; 
+            overflow: hidden; 
         }
 
-        .ponyo-sticker {
-            position: absolute;
-            width: 100px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            animation: bounce 3s infinite ease-in-out;
-            z-index: 5;
+        /* Stickers Ponyo */
+        .ponyo-sticker { 
+            position: absolute; 
+            width: 100px; 
+            cursor: pointer; 
+            animation: bounce 3s infinite ease-in-out; 
+            z-index: 5; 
+            transition: 0.3s; 
+        }
+        .ponyo-sticker:hover { transform: scale(1.2) rotate(10deg); }
+        
+        @keyframes bounce { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-20px); } 
         }
 
-        .ponyo-sticker:hover {
-            transform: scale(1.3) rotate(15deg) !important;
-            filter: drop-shadow(0 0 15px #ffb7b2);
+        /* Mũi tên chỉ dẫn */
+        .arrow-hint { 
+            position: absolute; 
+            background: white; 
+            color: var(--dark-pink); 
+            padding: 8px 15px; 
+            border-radius: 15px; 
+            font-size: 0.9rem; 
+            font-weight: bold; 
+            z-index: 20; 
+            border: 2px solid var(--pink);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        /* Khung nội dung */
+        .container { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 40px; border-radius: 40px; 
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4); 
+            text-align: center; z-index: 10; 
+            width: 90%; max-width: 420px; 
+            border: 3px dashed var(--pink); 
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px; border-radius: 40px;
-            box-shadow: 0 15px 30px rgba(255, 182, 193, 0.4);
-            text-align: center; z-index: 10;
-            max-width: 450px; border: 3px dashed #ffb7b2;
-        }
-
-        h1 { color: #ff6b6b; font-size: 2.2rem; }
+        h1 { color: var(--dark-pink); font-size: 2rem; margin-bottom: 10px; }
         p { color: #888; font-size: 1.3rem; }
 
-        .arrow-hint {
-            position: absolute;
-            background: white;
-            color: #ff6b6b;
-            padding: 8px 15px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-            font-weight: bold;
-            z-index: 20;
-            pointer-events: none;
-        }
-
         .btn-group { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
-        button {
-            padding: 12px; border: none; border-radius: 25px;
-            background: #ffb7b2; color: white;
-            font-family: inherit; font-size: 1.2rem;
-            cursor: pointer; transition: 0.3s;
+        
+        button { 
+            padding: 12px; border: none; border-radius: 25px; 
+            background: var(--pink); color: white; 
+            font-family: inherit; font-size: 1.2rem; 
+            cursor: pointer; transition: 0.3s; 
         }
-        button:hover { background: #ff8b84; transform: scale(1.05); }
+        button:hover { background: var(--dark-pink); transform: translateY(-3px); }
 
         .hidden { display: none; }
+        
+        input[type="text"], input[type="radio"] { margin: 10px 5px; cursor: pointer; }
         input[type="text"] {
-            padding: 12px; width: 80%; border: 2px solid #ffb7b2;
-            border-radius: 15px; outline: none; margin: 10px 0;
-            font-family: inherit; text-align: center;
+            padding: 12px; width: 85%; border: 2px solid var(--pink);
+            border-radius: 15px; outline: none; text-align: center; font-family: inherit;
         }
 
-        #alert-box {
-            position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: white; border: 5px solid #ffb7b2;
-            padding: 40px; border-radius: 30px; z-index: 100;
-            box-shadow: 0 0 100px rgba(0,0,0,0.2);
-            text-align: center;
+        /* Biển cảnh báo */
+        #alert-box { 
+            position: fixed; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            background: white; border: 5px solid var(--pink); 
+            padding: 40px; border-radius: 30px; z-index: 100; 
+            text-align: center; box-shadow: 0 0 100px rgba(0,0,0,0.2); 
+            width: 300px;
         }
-        .close-x { position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 1.5rem; color: #ffb7b2; }
+        .close-x { position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 1.5rem; color: var(--pink); }
 
-        /* Style cho trái tim bí mật */
-        .secret-heart {
+        /* NÚT KẾT QUẢ TO ĐẬM */
+        .admin-btn { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            background: #ff6b6b; 
+            color: white; 
+            padding: 15px 25px; 
+            border-radius: 50px; 
+            font-size: 1.2rem; 
+            font-weight: bold;
+            border: 3px solid #ffffff;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
             cursor: pointer;
-            display: inline-block;
-            transition: transform 0.3s;
+            z-index: 999;
+            transition: 0.3s;
         }
-        .secret-heart:hover {
-            transform: scale(1.5);
-        }
+        .admin-btn:hover { transform: scale(1.1); background: #ff4757; }
     </style>
 </head>
 <body>
 
     <img src="ponyo1.png" class="ponyo-sticker" style="top:15%; left:10%;" onclick="nextPage(2)">
-    <img src="ponyo2.png" class="ponyo-sticker" style="bottom:20%; left:15%;" onclick="nextPage(2)">
+    <img src="ponyo2.png" class="ponyo-sticker" style="bottom:15%; left:15%;" onclick="nextPage(2)">
     
     <img id="target-ponyo" src="ponyo3.png" class="ponyo-sticker" style="top:25%; right:15%;" onclick="nextPage(2)">
-    <div id="arrow" class="arrow-hint">Bé nhấn dô sticker đây nèee!! ➔</div>
+    <div id="arrow" class="arrow-hint" style="top:30%; right:30%;">Bé nhấn dô sticker đây nèee!! ➔</div>
 
     <div id="page1" class="container">
         <h1>Chào mừng "bé iu" đã đến với trang của tớ</h1>
@@ -126,10 +140,10 @@
 
     <div id="page4" class="container hidden">
         <h1>Bé chọn khung giờ mình tới được nhé</h1>
-        <div class="btn-group">
+        <div class="btn-group" style="text-align: left; padding-left: 20px;">
             <label><input type="radio" name="time" value="16h-16h30"> 16h - 16h30</label>
-            <label><input type="radio" name="time" value="16h30-16h45"> 16h30-16h45</label>
-            <label><input type="radio" name="time" value="16h45-17h15"> 16h45-17h15</label>
+            <label><input type="radio" name="time" value="16h30-16h45"> 16h30 - 16h45</label>
+            <label><input type="radio" name="time" value="16h45-17h15"> 16h45 - 17h15</label>
             <input type="text" id="customTime" placeholder="Bé tự nhập giờ nếu muốn">
             <button onclick="nextPage(5)">Hoàn tất</button>
         </div>
@@ -138,14 +152,12 @@
     <div id="page5" class="container hidden">
         <h1>Bé hãy điền tên của mình để LeeZyy biết bé là ai nhee</h1>
         <input type="text" id="userName" placeholder="Nhập tên bé...">
-        <br>
         <button onclick="showWarning('Khoan! Bé nhớ lên đồ xinh vào nhá', true)">Xong</button>
     </div>
 
     <div id="pageEnd" class="container hidden">
-        <h1>Cảm ơn bé đã giành thời gian trả lời với tớ nha 
-            <span class="secret-heart" onclick="window.open('https://docs.google.com/spreadsheets/d/1teZYenpy9OZLlgGW1HLJFqMovIRy2KFqLf8pqDcV05E/edit?gid=0#gid=0')">💖</span>
-        </h1>
+        <h1>Cảm ơn bé đã giành thời gian trả lời với tớ nha 💖</h1>
+        <button class="admin-btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1teZYenpy9OZLlgGW1HLJFqMovIRy2KFqLf8pqDcV05E/edit?gid=0#gid=0')">XEM KẾT QUẢ 📊</button>
     </div>
 
     <div id="alert-box" class="hidden">
@@ -155,14 +167,6 @@
     </div>
 
     <script>
-        function locateArrow() {
-            const ponyo = document.getElementById('target-ponyo').getBoundingClientRect();
-            const arrow = document.getElementById('arrow');
-            arrow.style.top = (ponyo.top + 30) + 'px';
-            arrow.style.left = (ponyo.left - 130) + 'px';
-        }
-        window.onload = locateArrow;
-
         function nextPage(p) {
             document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
             document.getElementById('arrow').classList.add('hidden');
@@ -187,37 +191,22 @@
             document.getElementById('alert-box').classList.add('hidden');
         }
 
-        function finishApp() {
-            closeAlert();
-            nextPage('end');
-        }
-
         function sendData() {
-            const formID = "1W4mTLGqTK4LR08ZxBGbE9D3mPXDX1ZYpcbZz3IjD_OU"; 
-            const url = `https://docs.google.com/forms/d/e/${formID}/formResponse`;
-            
             const name = document.getElementById('userName').value;
             let timeChoice = document.querySelector('input[name="time"]:checked')?.value || "";
             const customTime = document.getElementById('customTime').value;
             const finalTime = customTime ? `${timeChoice} | Tự nhập: ${customTime}` : timeChoice;
 
-            if (!name) {
-                alert("Bé ơi, nhập tên cho tớ biết với nhee!");
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append("entry.2062978233", name); 
-            formData.append("entry.191085165", finalTime);
-
-            fetch(url, { 
-                method: "POST", 
-                mode: "no-cors", 
-                body: formData 
+            // Gửi lên SheetDB
+            fetch('https://sheetdb.io/api/v1/td1vrr45a5098', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    data: [{ ten: name, thoigian: finalTime, ngaygio: new Date().toLocaleString("vi-VN") }]
+                })
             }).then(() => {
-                finishApp();
-            }).catch(() => {
-                finishApp();
+                closeAlert();
+                nextPage('end');
             });
         }
     </script>
