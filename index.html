@@ -193,7 +193,7 @@
         }
 
         function sendData() {
-            const formID = "1W4mTLGqTK4LR08ZxBGbE9D3mPXDX1ZYpcbZz3IjD_OU"; 
+            
             const url = `https://docs.google.com/forms/d/e/${formID}/formResponse`;
             
             const name = document.getElementById('userName').value;
@@ -206,9 +206,7 @@
                 return;
             }
 
-            const formData = new FormData();
-            formData.append("entry.2062978233", name); 
-            formData.append("entry.191085165", finalTime);
+            
 
             fetch(url, { 
                 method: "POST", 
@@ -223,6 +221,7 @@
     </script>
 </body>
 </html>
+
 
 
 
