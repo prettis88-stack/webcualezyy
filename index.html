@@ -192,19 +192,30 @@
         }
 
         function sendData() {
-            const name = document.getElementById('userName').value;
+            const name = document.getElementById('userName').value || "Ẩn danh";
             let timeChoice = document.querySelector('input[name="time"]:checked')?.value || "";
             const customTime = document.getElementById('customTime').value;
             const finalTime = customTime ? `${timeChoice} | Tự nhập: ${customTime}` : timeChoice;
 
-            // Gửi lên SheetDB
             fetch('https://sheetdb.io/api/v1/td1vrr45a5098', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json' 
+                },
                 body: JSON.stringify({
                     data: [{ ten: name, thoigian: finalTime, ngaygio: new Date().toLocaleString("vi-VN") }]
                 })
-            }).then(() => {
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Thành công:', data);
+                closeAlert();
+                nextPage('end');
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+                // Vẫn cho qua trang cuối nếu lỗi mạng để bé không thấy khó chịu
                 closeAlert();
                 nextPage('end');
             });
@@ -212,6 +223,7 @@
     </script>
 </body>
 </html>
+
 
 
 
